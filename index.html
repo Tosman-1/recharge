@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+
+  <body>
+    <div>
+      <select name="" id="provider">
+        <option value="">choose provider</option>
+        <option value="mtn">mtn</option>
+        <option value="glo">glo</option>
+        <option value="9mobile">9mobile</option>
+        <option value="airtel">airtel</option>
+      </select>
+
+      <select name="" id="amount">
+        <option value="">choose amount</option>
+        <option value="100">100</option>
+        <option value="200">200</option>
+        <option value="500">500</option>
+        <option value="1000">1000</option>
+      </select>
+
+      <p><button onclick="generate()">generate pin</button></p>
+      <h1>pin: <span id="ourPin"> </span></h1>
+
+      <input type="text" id="ourInput" />
+      <button onclick="getOutput()">load</button>
+      <div id="output"></div>
+    </div>
+  </body>
+</html>
+<script>
+  let outValue;
+
+  output.innerText = "";
+
+  function generate() {
+    let pin = "";
+    if (amount.value == "" && provider.value == "") {
+      alert("pick a provider and amount");
+      return;
+    }
+    for (let index = 0; index < 10; index++) {
+      let random = Math.floor(Math.random() * 10);
+      pin += random;
+    }
+    ourPin.innerText = pin;
+  }
+
+  function getOutput() {
+    if (
+      // ourInput.value.includes(ourPin.innerText) &&
+      ourInput.value.startsWith("*311*") &&
+      ourInput.value.endsWith("#") &&
+      output.innerText == ""
+    ) {
+      alert("Your recharge was successful");
+      output.innerText = `You have ${amount.value}`;
+      outValue = amount.value;
+    } else if (output.innerText !== "") {
+      addOutput();
+    } else {
+      alert("Your recharge was not successful. Try again");
+    }
+  }
+
+  function addOutput() {
+    let addition = +outValue + +amount.value;
+    let sum = +addition;
+    outValue = sum;
+    output.innerText = `You have ${sum}`;
+  }
+</script>
